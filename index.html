@@ -212,7 +212,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/sun/2023/08/15/milk-v%E7%82%B9%E7%81%AF%E6%95%99%E7%A8%8B/" target="_self">
         <div>
-          milk-v duo点灯教程（shell命令,shell脚本,C语言）点灯前的准备(参考此处) 一个烧录好最新系统的milk-v duo板子  启用ssh连接到milk-v duo  shell命令点灯12345echo 440 &gt; /sys/class/gpio/export 					#此时生成/sys/class/gpio/gpio440目录echo out &gt; /sys/cla
+          milk-v duo点灯教程（shell命令,shell脚本,C语言）点灯前的准备(参考此处) 一个烧录好最新镜像的milk-v duo板子   启用ssh连接到milk-v duo  停止开机闪烁led的进程   最新的镜像开机会启动一个闪烁led的进程，我们需要把它停掉才能进行下面的实验。使用top命令查看进程 1top  可以看到PID进程号为164的进程，这个就是闪烁led的进程，我们使用
         </div>
       </a>
 
