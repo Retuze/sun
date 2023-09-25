@@ -1,0 +1,740 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" >
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/sun/img/emoji.png">
+  <link rel="icon" href="/sun/img/emoji.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#fafafa">
+  <meta name="author" content="Retuze">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Makefile简介：自动化构建工具的力量 Makefile是一种用于自动化构建项目的工具。它定义了一组规则，指定了如何生成目标文件。通过编写Makefile，开发人员可以简化项目的构建过程，减少手动操作的错误，并提高开发效率。 Makefile的基本概念 Makefile由三部分组成：目标（target）、依赖（dependencies）和命令（commands）。  目标：要生成的文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="makefile教程（一）">
+<meta property="og:url" content="https://retuze.github.io/sun/2023/09/26/makefile%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="RETUZE">
+<meta property="og:description" content="Makefile简介：自动化构建工具的力量 Makefile是一种用于自动化构建项目的工具。它定义了一组规则，指定了如何生成目标文件。通过编写Makefile，开发人员可以简化项目的构建过程，减少手动操作的错误，并提高开发效率。 Makefile的基本概念 Makefile由三部分组成：目标（target）、依赖（dependencies）和命令（commands）。  目标：要生成的文">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-25T20:02:15.000Z">
+<meta property="article:modified_time" content="2023-09-25T20:15:04.144Z">
+<meta property="article:author" content="Retuze">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>makefile教程（一） - RETUZE</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/sun/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/sun/css/highlight.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"retuze.github.io","root":"/sun/","version":"1.9.5-a","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/sun/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/sun/js/utils.js" ></script>
+  <script  src="/sun/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 30vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/sun/">
+      <strong>😅RETUZE</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/sun/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/sun/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/sun/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/sun/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/sun/img/default1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">makefile教程（一）</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-09-26 04:02" pubdate>
+          2023年9月26日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          61 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">makefile教程（一）</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1
+id="makefile简介自动化构建工具的力量">Makefile简介：自动化构建工具的力量</h1>
+<p>Makefile是一种用于自动化构建项目的工具。它定义了一组规则，指定了如何生成目标文件。通过编写Makefile，开发人员可以简化项目的构建过程，减少手动操作的错误，并提高开发效率。</p>
+<h2 id="makefile的基本概念">Makefile的基本概念</h2>
+<p>Makefile由三部分组成：目标（target）、依赖（dependencies）和命令（commands）。</p>
+<ul>
+<li>目标：要生成的文件或执行的任务。</li>
+<li>依赖：目标文件所依赖的文件或任务。</li>
+<li>命令：生成目标文件或执行任务的命令。</li>
+</ul>
+<p>以下是一个简单的Makefile示例：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-section">all: program</span><br><br><span class="hljs-section">program: main.o utils.o</span><br>    gcc -o program main.o utils.o<br><br><span class="hljs-section">main.o: main.c</span><br>    gcc -c main.c<br><br><span class="hljs-section">utils.o: utils.c</span><br>    gcc -c utils.c<br></code></pre></td></tr></table></figure>
+<p>在这个例子中，<code>all</code>是目标，它依赖于<code>program</code>。<code>program</code>依赖于<code>main.o</code>和<code>utils.o</code>。生成<code>main.o</code>和<code>utils.o</code>的命令分别是编译<code>main.c</code>和<code>utils.c</code>。</p>
+<h2 id="makefile的工作流程">Makefile的工作流程</h2>
+<ol type="1">
+<li>定义目标、依赖和命令。在Makefile中，目标通常放在文件的顶部，依赖和命令则放在目标下面。</li>
+<li>运行<code>make</code>命令，指定要生成的目标。例如，运行<code>make all</code>将生成名为<code>all</code>的目标。如果不指定目标，则默认生成名为<code>all</code>的目标。</li>
+<li>Makefile检查目标是否已过期。如果目标不存在或依赖文件中的任何一个比目标更新，则目标被视为过期。</li>
+<li>如果目标过期，Makefile会执行与目标相关的命令来生成目标。如果目标没有过期，则不会执行任何操作。</li>
+<li>如果在执行命令时出现错误，Makefile将停止并显示错误消息。如果没有错误，则生成目标文件或执行任务。</li>
+<li>完成后，可以运行其他目标或执行其他操作。</li>
+</ol>
+<h2 id="使用makefile的优点">使用Makefile的优点</h2>
+<ol type="1">
+<li>自动化：通过编写一次Makefile，可以自动化构建过程，减少手动操作。</li>
+<li>可移植性：Makefile在不同的操作系统和环境中运行，使得构建过程更加一致。</li>
+<li>灵活性：Makefile支持条件语句、变量和函数等高级功能，可以根据项目需求进行定制。</li>
+</ol>
+<h2 id="makefile中的常用函数">Makefile中的常用函数</h2>
+<p>Makefile支持自定义函数，这些函数可以用于处理字符串和文件名，以及执行其他任务。</p>
+<p>自定义函数的定义格式为：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-keyword">define</span> functionName<br>    command1<br>    command2<br>    ...<br><span class="hljs-keyword">endef</span><br></code></pre></td></tr></table></figure>
+<p>其中，<code>functionName</code>是函数的名称，<code>command1</code>、<code>command2</code>等是函数内部的命令。</p>
+<p>在函数内部，可以通过命令来操作变量、执行特定任务等。函数内部使用的变量在函数外部是不可见的，只有在函数内部才能访问到这些变量。</p>
+<p>下面是一个简单的示例，展示了如何递归遍历目录下指定后缀的文件：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-keyword">define</span> rwildcard<br>    <span class="hljs-variable">$(<span class="hljs-built_in">foreach</span> d,$(<span class="hljs-built_in">wildcard</span> $(<span class="hljs-built_in">addsuffix</span> *,$(1)</span>)),<span class="hljs-variable">$(<span class="hljs-built_in">call</span> rwildcard,<span class="hljs-variable">$(d)</span>/,$(2)</span>)<span class="hljs-variable">$(<span class="hljs-built_in">filter</span> $(<span class="hljs-built_in">subst</span> *,%,$(2)</span>),<span class="hljs-variable">$(d)</span>))<br><span class="hljs-keyword">endef</span><br><br>result := <span class="hljs-variable">$(<span class="hljs-built_in">call</span> rwildcard,path,*.c)</span><br>echo <span class="hljs-variable">$(result)</span><br></code></pre></td></tr></table></figure>
+<p>在这个例子中，我们定义了一个名为<code>rwildcard</code>的函数，该函数接受两个参数路径和文件后缀返回匹配的文件。然后我们使用<code>$(call functionName,param1,param2,...)</code>语法来调用函数，将参数传递给函数并获取返回值。在这个例子中，<code>$(call rwildcard,path,*.c)</code>将返回后缀为.c的所有文件路径，并存储在变量<code>result</code>中。最后，使用<code>echo</code>命令输出结果。</p>
+<p>除了上述的示例外，Makefile还提供了许多预定义的函数来处理文件名、文件路径、环境变量等。这些函数可以与自定义函数一起使用，以便更灵活地处理文件和执行任务。</p>
+<p>在Makefile中，函数是用于处理字符串和文件名的强大工具。下面是一些常用的Makefile函数：</p>
+<h3 id="字符串函数">1. 字符串函数</h3>
+<ul>
+<li><code>$(subst from,to,text)</code>:
+将字符串中的"from"替换为"to"。</li>
+<li><code>$(patsubst pattern,replacement,text)</code>:
+将符合"pattern"的字符串替换为"replacement"。</li>
+<li><code>$(strip string)</code>: 去掉字符串开头和结尾的空格。</li>
+<li><code>$(findstring find,in)</code>:
+在"in"中查找"find"，返回"find"的起始位置。如果未找到，返回空字符串。</li>
+<li><code>$(filter pattern...,text)</code>:
+返回符合"pattern"的字符串列表。</li>
+<li><code>$(filter-out pattern...,text)</code>:
+返回不符合"pattern"的字符串列表。</li>
+<li><code>$(sort list)</code>: 对字符串列表进行排序。</li>
+<li><code>$(word n,text)</code>: 返回"text"中的第n个单词。</li>
+<li><code>$(wordlist s,e,text)</code>:
+返回"text"中从第s个到第e个单词的列表。</li>
+<li><code>$(words text)</code>: 返回"text"中的单词数量。</li>
+<li><code>$(firstword names...)</code>:
+返回第一个非空、非空格字符的单词。</li>
+<li><code>$(lastword names...)</code>:
+返回最后一个非空、非空格字符的单词。</li>
+</ul>
+<h3 id="文件名函数">2. 文件名函数</h3>
+<ul>
+<li><code>$(dir names...)</code>: 返回文件名中的目录部分。</li>
+<li><code>$(notdir names...)</code>: 返回文件名中的非目录部分。</li>
+<li><code>$(suffix names...)</code>: 返回文件名中的后缀部分。</li>
+<li><code>$(basename names...)</code>:
+返回文件名中的基本名称部分（去掉后缀）。</li>
+<li><code>$(addsuffix suffix,names...)</code>:
+将后缀"suffix"添加到文件名"names"上。</li>
+<li><code>$(addprefix prefix,names...)</code>:
+将前缀"prefix"添加到文件名"names"上。</li>
+<li><code>$(join list1,list2)</code>:
+将两个列表中的对应项连接起来，并以空格分隔。</li>
+<li><code>$(wildcard pattern)</code>:
+返回符合"pattern"的文件名列表。</li>
+<li><code>$(realpath names...)</code>: 返回文件名的绝对路径。</li>
+<li><code>$(abspath names...)</code>:
+返回文件名的绝对路径（如果文件存在）。</li>
+<li><code>$(call variable,param,param,...)</code>:
+使用参数扩展变量。</li>
+</ul>
+<h3 id="通用makefile模板">3. 通用makefile模板</h3>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-comment"># /**************************************</span><br><span class="hljs-comment">#  * @Author        : Retuze </span><br><span class="hljs-comment">#  * @Date          : 2023-09-24 03:50:23</span><br><span class="hljs-comment">#  * @LastEditors   : Retuze </span><br><span class="hljs-comment">#  * @LastEditTime  : 2023-09-25 18:45:48</span><br><span class="hljs-comment">#  * @Description   : </span><br><span class="hljs-comment">#  */*************************************</span><br><br><span class="hljs-comment"># Application name</span><br>BUILD_EXE    = OpenGL.exe<br><span class="hljs-comment"># Output directory</span><br>BUILD_OUTPUT = build<br><span class="hljs-comment"># Source directory</span><br>SOURCES 	 = <br><span class="hljs-comment"># Add a search directory for header files other than the $(SOURCES) directory</span><br>INCLUDES 	 = -Idepends/<span class="hljs-keyword">include</span><br><span class="hljs-comment"># Add a search directory for libraries</span><br>LD_DIRS      = -Ldepends<br><span class="hljs-comment"># Add required libraries</span><br>LD_LIBS      = -lglfw3 -lopengl32 -lgdi32<br><br><br><span class="hljs-comment"># 预定义的一些函数</span><br><br><span class="hljs-comment"># brief : 打印编译消息</span><br><span class="hljs-comment"># eg : $(call print,compiling,file)</span><br><span class="hljs-keyword">ifeq</span> (<span class="hljs-variable">$(OS)</span>,Windows_NT)<br>	print=echo $(1) <span class="hljs-variable">$(<span class="hljs-built_in">notdir</span> $(2)</span>)...<br><span class="hljs-keyword">else</span><br>	print=printf <span class="hljs-string">&quot;$(1) $(notdir $(2))...\n&quot;</span><br><span class="hljs-keyword">endif</span><br><br><span class="hljs-comment"># brief : 递归遍历指定后缀的文件</span><br><span class="hljs-comment"># eg : $(call rwildcard,path,suffix)</span><br>rwildcard = <span class="hljs-variable">$(<span class="hljs-built_in">foreach</span> d,$(<span class="hljs-built_in">wildcard</span> $(<span class="hljs-built_in">addsuffix</span> *,$(1)</span>)),<span class="hljs-variable">$(<span class="hljs-built_in">call</span> rwildcard,<span class="hljs-variable">$(d)</span>/,$(2)</span>)<span class="hljs-variable">$(<span class="hljs-built_in">filter</span> $(<span class="hljs-built_in">subst</span> *,%,$(2)</span>),<span class="hljs-variable">$(d)</span>))<br><br><span class="hljs-comment"># brief : 删除文件或者文件夹</span><br><span class="hljs-comment"># eg : $(RM) file</span><br><span class="hljs-keyword">ifeq</span> (<span class="hljs-variable">$(OS)</span>,Windows_NT)<br>	RM = del /Q<br><span class="hljs-keyword">else</span><br>	RM = rm -rf<br><span class="hljs-keyword">endif</span><br><br><span class="hljs-comment"># brief : 是否打开调试输出信息（默认关闭）</span><br><span class="hljs-keyword">ifeq</span> (<span class="hljs-variable">$(Debug)</span>,0)<br>	at = <br><span class="hljs-keyword">else</span> <br>	at = @<br><span class="hljs-keyword">endif</span><br><br><span class="hljs-comment"># 编译命令</span><br>CPP     = <span class="hljs-variable">$(CROSS_COMPILE)</span>g++<br>CC      = <span class="hljs-variable">$(CROSS_COMPILE)</span>gcc<br>LD      = <span class="hljs-variable">$(CROSS_COMPILE)</span>ld<br>AR      = <span class="hljs-variable">$(CROSS_COMPILE)</span>ar<br>NM      = <span class="hljs-variable">$(CROSS_COMPILE)</span>nm<br>OBJCOPY = <span class="hljs-variable">$(CROSS_COMPILE)</span>objcopy<br>OBJDUMP = <span class="hljs-variable">$(CROSS_COMPILE)</span>objdump<br>READELF = <span class="hljs-variable">$(CROSS_COMPILE)</span>readelf<br>STRIP   = <span class="hljs-variable">$(CROSS_COMPILE)</span>strip<br><br><span class="hljs-keyword">export</span> CPP CC LD AR NM OBJCOPY OBJDUMP READELF STRIP<br><br><span class="hljs-keyword">ifndef</span> SOURCES<br>	SOURCES := ./<br><span class="hljs-keyword">endif</span><br><br><span class="hljs-keyword">ifeq</span> (<span class="hljs-variable">$(<span class="hljs-built_in">strip</span> <span class="hljs-variable">$(BUILD_OUTPUT)</span>)</span>, )<br>	OBJ_FOLDER =<br><span class="hljs-keyword">else</span><br>	OBJ_FOLDER = <span class="hljs-variable">$(<span class="hljs-built_in">strip</span> <span class="hljs-variable">$(BUILD_OUTPUT)</span>)</span>/<br><span class="hljs-keyword">endif</span><br><br>INCLUDES    += <span class="hljs-variable">$(<span class="hljs-built_in">sort</span> $(<span class="hljs-built_in">foreach</span> d,$(<span class="hljs-built_in">call</span> rwildcard,<span class="hljs-variable">$(SOURCES)</span>,*.h)</span>,<span class="hljs-variable">$(<span class="hljs-built_in">dir</span> -I$d)</span>))<br>C_SOURCES   = <span class="hljs-variable">$(<span class="hljs-built_in">sort</span> $(<span class="hljs-built_in">call</span> rwildcard,<span class="hljs-variable">$(SOURCES)</span>,*.c)</span>)<br>CPP_SOURCES = <span class="hljs-variable">$(<span class="hljs-built_in">sort</span> $(<span class="hljs-built_in">call</span> rwildcard,<span class="hljs-variable">$(SOURCES)</span>,*.cpp)</span>)<br>ASM_SOURCES = <span class="hljs-variable">$(<span class="hljs-built_in">sort</span> $(<span class="hljs-built_in">call</span> rwildcard,<span class="hljs-variable">$(SOURCES)</span>,*.s)</span>)<br>ASM_SOURCES += <span class="hljs-variable">$(<span class="hljs-built_in">sort</span> $(<span class="hljs-built_in">call</span> rwildcard,<span class="hljs-variable">$(SOURCES)</span>,*.S)</span>)<br><br>OBJECTS = <span class="hljs-variable">$(<span class="hljs-built_in">addprefix</span> <span class="hljs-variable">$(OBJ_FOLDER)</span>,$(<span class="hljs-built_in">notdir</span> $(<span class="hljs-built_in">patsubst</span> %.c,%.o,<span class="hljs-variable">$(C_SOURCES)</span>)</span>))<br>OBJECTS += <span class="hljs-variable">$(<span class="hljs-built_in">addprefix</span> <span class="hljs-variable">$(OBJ_FOLDER)</span>,$(<span class="hljs-built_in">notdir</span> $(<span class="hljs-built_in">patsubst</span> %.cpp,%.o,<span class="hljs-variable">$(CPP_SOURCES)</span>)</span>))<br>OBJECTS += <span class="hljs-variable">$(<span class="hljs-built_in">addprefix</span> <span class="hljs-variable">$(OBJ_FOLDER)</span>,$(<span class="hljs-built_in">notdir</span> $(<span class="hljs-built_in">patsubst</span> %.s,%.o,<span class="hljs-variable">$(ASM_SOURCES)</span>)</span>))<br>OBJECTS += <span class="hljs-variable">$(<span class="hljs-built_in">addprefix</span> <span class="hljs-variable">$(OBJ_FOLDER)</span>,$(<span class="hljs-built_in">notdir</span> $(<span class="hljs-built_in">patsubst</span> %.S,%.o,<span class="hljs-variable">$(ASM_SOURCES)</span>)</span>))<br><br>DEPENDS = $(OBJECTS:.o=.d)<br><br><span class="hljs-comment"># 宏定义</span><br>CC_SYMBOLS  = <br>ASM_SYMBOLS =<br><br><span class="hljs-comment"># Flags</span><br>COMMON_FLAGS = -g -O2<br><br>C_FLAGS    =  <br>CPP_FLAGS  =  <br>ASM_FLAGS  = <br><br>CFLAGS   = <span class="hljs-variable">$(<span class="hljs-built_in">strip</span> <span class="hljs-variable">$(COMMON_FLAGS)</span> <span class="hljs-variable">$(C_FLAGS)</span> <span class="hljs-variable">$(INCLUDES)</span> <span class="hljs-variable">$(CC_SYMBOLS)</span> -c -MMD -MP)</span><br>CPPFLAGS = <span class="hljs-variable">$(<span class="hljs-built_in">strip</span> <span class="hljs-variable">$(COMMON_FLAGS)</span> <span class="hljs-variable">$(CPP_FLAGS)</span> <span class="hljs-variable">$(INCLUDES)</span> <span class="hljs-variable">$(CC_SYMBOLS)</span> -c -MMD -MP)</span><br>ASFLAGS  = <span class="hljs-variable">$(<span class="hljs-built_in">strip</span> <span class="hljs-variable">$(COMMON_FLAGS)</span> <span class="hljs-variable">$(ASM_FLAGS)</span> <span class="hljs-variable">$(INCLUDES)</span> <span class="hljs-variable">$(ASM_SYMBOLS)</span> -c)</span><br><br>VPATH := <span class="hljs-variable">$(SOURCES)</span><br>VPATH += <span class="hljs-variable">$(<span class="hljs-built_in">sort</span> $(<span class="hljs-built_in">dir</span> <span class="hljs-variable">$(C_SOURCES)</span>)</span>)<br>VPATH += <span class="hljs-variable">$(<span class="hljs-built_in">sort</span> $(<span class="hljs-built_in">dir</span> <span class="hljs-variable">$(CPP_SOURCES)</span>)</span>)<br>VPATH += <span class="hljs-variable">$(<span class="hljs-built_in">sort</span> $(<span class="hljs-built_in">dir</span> <span class="hljs-variable">$(ASM_SOURCES)</span>)</span>)<br>VPATH += <span class="hljs-variable">$(<span class="hljs-built_in">sort</span> $(<span class="hljs-built_in">dir</span> <span class="hljs-variable">$(INCLUDES)</span>)</span>)<br><br>PHONY := __all__<br><span class="hljs-section">__all__: <span class="hljs-variable">$(BUILD_EXE)</span> check</span><br>	<span class="hljs-variable">$(at)</span><span class="hljs-variable">$(<span class="hljs-built_in">call</span> print,successful build,<span class="hljs-variable">$&lt;</span>)</span><br><br><span class="hljs-comment"># Compile C sources.</span><br><span class="hljs-variable">$(OBJ_FOLDER)</span>%.o : %.c<br>	<span class="hljs-variable">$(at)</span><span class="hljs-variable">$(<span class="hljs-built_in">call</span> print,compiling,<span class="hljs-variable">$&lt;</span>)</span><br>	<span class="hljs-variable">$(at)</span><span class="hljs-variable">$(CC)</span> <span class="hljs-variable">$(CFLAGS)</span> <span class="hljs-variable">$&lt;</span> -o <span class="hljs-variable">$@</span><br><br><span class="hljs-comment"># Compile C++ sources.</span><br><span class="hljs-variable">$(OBJ_FOLDER)</span>%.o : %.cpp<br>	<span class="hljs-variable">$(at)</span><span class="hljs-variable">$(<span class="hljs-built_in">call</span> print,compiling,<span class="hljs-variable">$&lt;</span>)</span><br>	<span class="hljs-variable">$(at)</span><span class="hljs-variable">$(CPP)</span> <span class="hljs-variable">$(CPPFLAGS)</span> <span class="hljs-variable">$&lt;</span> -o <span class="hljs-variable">$@</span><br><br><span class="hljs-comment"># Compile ASM sources.</span><br><span class="hljs-variable">$(OBJ_FOLDER)</span>%.o : %.s<br>	<span class="hljs-variable">$(at)</span><span class="hljs-variable">$(<span class="hljs-built_in">call</span> print,assebmling,<span class="hljs-variable">$&lt;</span>)</span><br>	<span class="hljs-variable">$(at)</span><span class="hljs-variable">$(CPP)</span> <span class="hljs-variable">$(ASMFLAGS)</span> <span class="hljs-variable">$&lt;</span> -o <span class="hljs-variable">$@</span><br><br><span class="hljs-comment"># Compile ASM sources.</span><br><span class="hljs-variable">$(OBJ_FOLDER)</span>%.o : %.S<br>	<span class="hljs-variable">$(at)</span><span class="hljs-variable">$(<span class="hljs-built_in">call</span> print,assebmling,<span class="hljs-variable">$&lt;</span>)</span><br>	<span class="hljs-variable">$(at)</span><span class="hljs-variable">$(CPP)</span> <span class="hljs-variable">$(ASMFLAGS)</span> <span class="hljs-variable">$&lt;</span> -o <span class="hljs-variable">$@</span><br><br><span class="hljs-variable">$(BUILD_OUTPUT)</span>:<br><span class="hljs-keyword">ifeq</span> (<span class="hljs-variable">$(OS)</span>,Windows_NT)<br>	<span class="hljs-variable">$(at)</span>-mkdir <span class="hljs-variable">$(BUILD_OUTPUT)</span><br><span class="hljs-keyword">else</span><br>	<span class="hljs-variable">$(at)</span><span class="hljs-variable">$(<span class="hljs-built_in">shell</span> mkdir <span class="hljs-variable">$(BUILD_OUTPUT)</span> 2&gt;/dev/null)</span><br><span class="hljs-keyword">endif</span><br><br><span class="hljs-comment"># Build executable</span><br><span class="hljs-variable">$(BUILD_EXE)</span> : <span class="hljs-variable">$(BUILD_OUTPUT)</span> <span class="hljs-variable">$(OBJECTS)</span><br>	<span class="hljs-variable">$(at)</span><span class="hljs-variable">$(<span class="hljs-built_in">call</span> print,linking,<span class="hljs-variable">$@</span>)</span><br>	<span class="hljs-variable">$(at)</span><span class="hljs-variable">$(CPP)</span> <span class="hljs-variable">$(LD_DIRS)</span> -o <span class="hljs-variable">$(OBJ_FOLDER)</span><span class="hljs-variable">$@</span> <span class="hljs-variable">$(OBJECTS)</span> <span class="hljs-variable">$(LD_LIBS)</span> <span class="hljs-variable">$(LD_OPTIONS)</span><br><br><span class="hljs-keyword">-include</span> <span class="hljs-variable">$(DEPENDS)</span><br><br>PHONY += clean<br><span class="hljs-section">clean:</span><br><span class="hljs-keyword">ifdef</span> BUILD_OUTPUT<br>	<span class="hljs-variable">$(at)</span>-<span class="hljs-variable">$(RM)</span> <span class="hljs-variable">$(<span class="hljs-built_in">subst</span> /,\\,<span class="hljs-variable">$(OBJ_FOLDER)</span>)</span><br><span class="hljs-keyword">else</span><br>	<span class="hljs-variable">$(at)</span>-<span class="hljs-variable">$(RM)</span> <span class="hljs-variable">$(<span class="hljs-built_in">subst</span> /,\\,<span class="hljs-variable">$(OBJECTS)</span>)</span> <span class="hljs-variable">$(<span class="hljs-built_in">subst</span> /,\\,<span class="hljs-variable">$(DEPENDS)</span>)</span> <span class="hljs-variable">$(<span class="hljs-built_in">subst</span> /,\\,<span class="hljs-variable">$(BUILD_EXE)</span>)</span><br><span class="hljs-keyword">endif</span><br><br>PHONY += show<br><span class="hljs-section">show:</span><br>	@echo <span class="hljs-string">&quot;PHONY=<span class="hljs-variable">$(PHONY)</span>&quot;</span><br>	@echo <span class="hljs-string">&quot;BUILD_OUTPUT = <span class="hljs-variable">$(BUILD_OUTPUT)</span>&quot;</span><br>	@echo <span class="hljs-string">&quot;OBJ_FOLDER = <span class="hljs-variable">$(OBJ_FOLDER)</span>&quot;</span><br>	@echo <span class="hljs-string">&quot;SOURCES = <span class="hljs-variable">$(SOURCES)</span>&quot;</span><br>	@echo <span class="hljs-string">&quot;C_SOURCES = <span class="hljs-variable">$(C_SOURCES)</span>&quot;</span><br>	@echo <span class="hljs-string">&quot;CPP_SOURCES = <span class="hljs-variable">$(CPP_SOURCES)</span>&quot;</span><br>	@echo <span class="hljs-string">&quot;ASM_SOURCES = <span class="hljs-variable">$(ASM_SOURCES)</span>&quot;</span><br>	@echo <span class="hljs-string">&quot;OBJECTS = <span class="hljs-variable">$(OBJECTS)</span>&quot;</span><br>	@echo <span class="hljs-string">&quot;DEPENDS = <span class="hljs-variable">$(DEPENDS)</span>&quot;</span><br>	@echo <span class="hljs-string">&quot;INCLUDES = <span class="hljs-variable">$(INCLUDES)</span>&quot;</span><br>	@echo <span class="hljs-string">&quot;CFLAGS = <span class="hljs-variable">$(CFLAGS)</span>&quot;</span><br>	@echo <span class="hljs-string">&quot;CPPFLAGS = <span class="hljs-variable">$(CPPFLAGS)</span>&quot;</span><br>	@echo <span class="hljs-string">&quot;ASMFLAGS = <span class="hljs-variable">$(ASMFLAGS)</span>&quot;</span><br>	@echo <span class="hljs-string">&quot;LD_DIRS = <span class="hljs-variable">$(LD_DIRS)</span>&quot;</span><br>	@echo <span class="hljs-string">&quot;LD_LIBS = <span class="hljs-variable">$(LD_LIBS)</span>&quot;</span><br>	@echo <span class="hljs-string">&quot;LD_OPTIONS = <span class="hljs-variable">$(LD_OPTIONS)</span>&quot;</span><br><br>PHONY += check<br><span class="hljs-section">check:</span><br>	<span class="hljs-variable">$(<span class="hljs-built_in">if</span> $(<span class="hljs-built_in">subst</span> /,\\,$(<span class="hljs-built_in">filter</span>-out <span class="hljs-variable">$(OBJECTS)</span> <span class="hljs-variable">$(DEPENDS)</span>,$(<span class="hljs-built_in">sort</span> $(<span class="hljs-built_in">call</span> rwildcard,<span class="hljs-variable">$(BUILD_OUTPUT)</span>,*.o)</span>) <span class="hljs-variable">$(<span class="hljs-built_in">sort</span> $(<span class="hljs-built_in">call</span> rwildcard,<span class="hljs-variable">$(BUILD_OUTPUT)</span>,*.d)</span>))),<span class="hljs-variable">$(at)</span>-<span class="hljs-variable">$(RM)</span> <span class="hljs-variable">$(<span class="hljs-built_in">subst</span> /,\\,$(<span class="hljs-built_in">filter</span>-out <span class="hljs-variable">$(OBJECTS)</span> <span class="hljs-variable">$(DEPENDS)</span>,$(<span class="hljs-built_in">sort</span> $(<span class="hljs-built_in">call</span> rwildcard,<span class="hljs-variable">$(BUILD_OUTPUT)</span>,*.o)</span>) <span class="hljs-variable">$(<span class="hljs-built_in">sort</span> $(<span class="hljs-built_in">call</span> rwildcard,<span class="hljs-variable">$(BUILD_OUTPUT)</span>,*.d)</span>))))<br><br><span class="hljs-meta"><span class="hljs-keyword">.PHONY</span>: $(PHONY)</span><br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>makefile教程（一）</div>
+      <div>https://retuze.github.io/sun/2023/09/26/makefile教程（一）/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Retuze</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年9月26日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/sun/2023/09/22/git%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/" title="git使用笔记">
+                        <span class="hidden-mobile">git使用笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#gitalk-container', function() {
+      Fluid.utils.createCssLink('/sun/css/gitalk.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/gitalk/1.8.0/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"a3a7e61e8b19b207c6be","clientSecret":"0e43b8712060e0b185bdd18e8520425d5c1f9f23","repo":"sun","owner":"retuze","admin":["retuze"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
+          {
+            id: '7b452cb492000ecb7904f2021e828637'
+          }
+        )
+        var gitalk = new Gitalk(options);
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/sun/js/events.js" ></script>
+<script  src="/sun/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/sun/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/sun/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/sun/js/custom.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/sun/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
