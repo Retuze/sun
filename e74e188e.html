@@ -16,23 +16,25 @@
   <meta name="author" content="Retuze">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Scrcpy下载地址：https:&#x2F;&#x2F;github.com&#x2F;Genymobile&#x2F;scrcpy  使用ADB连接 有线连接或者无线连接都需要手机打开开发者模式的usb调试，无线连接还需要开启无线调试 无线连接需要通过命令 1adb connect ip:5555 连接成功后通过adb命令可以看到设备序列号UUID 1adb devices 只有一个设备的话可以直接启动scrcpy投屏">
+    <meta name="description" content="不少人第一次听说E类功放都是因为那个class E SSTC，从网上查询却发现资料少的可怜，其原理和设计方法就更无从谈及。下面我就根据书中所写以及自己的理解讲一下。讲之前还需说一下，因为电路分析必须涉及微积分，所以不懂的最好查一下，不需要会解，能明白符号含义和表达式意义就行。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Scrcpy使用教程">
-<meta property="og:url" content="https://retuze.github.io/sun/2023/09/20/Scrcpy%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:title" content="E类放大器原理">
+<meta property="og:url" content="https://retuze.github.io/sun/e74e188e.html">
 <meta property="og:site_name" content="RETUZE">
-<meta property="og:description" content="Scrcpy下载地址：https:&#x2F;&#x2F;github.com&#x2F;Genymobile&#x2F;scrcpy  使用ADB连接 有线连接或者无线连接都需要手机打开开发者模式的usb调试，无线连接还需要开启无线调试 无线连接需要通过命令 1adb connect ip:5555 连接成功后通过adb命令可以看到设备序列号UUID 1adb devices 只有一个设备的话可以直接启动scrcpy投屏">
+<meta property="og:description" content="不少人第一次听说E类功放都是因为那个class E SSTC，从网上查询却发现资料少的可怜，其原理和设计方法就更无从谈及。下面我就根据书中所写以及自己的理解讲一下。讲之前还需说一下，因为电路分析必须涉及微积分，所以不懂的最好查一下，不需要会解，能明白符号含义和表达式意义就行。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-09-20T10:28:19.000Z">
-<meta property="article:modified_time" content="2023-09-20T11:38:56.422Z">
+<meta property="og:image" content="https://retuze.github.io/sun/00.png">
+<meta property="article:published_time" content="2023-09-20T10:09:36.000Z">
+<meta property="article:modified_time" content="2023-09-21T13:16:21.303Z">
 <meta property="article:author" content="Retuze">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://retuze.github.io/sun/00.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Scrcpy使用教程 - RETUZE</title>
+  <title>E类放大器原理 - RETUZE</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -178,7 +180,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Scrcpy使用教程</span>
+            <span id="subtitle">E类放大器原理</span>
           
         </div>
 
@@ -189,7 +191,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-09-20 18:28" pubdate>
+        <time datetime="2023-09-20 18:09" pubdate>
           2023年9月20日 晚上
         </time>
       </span>
@@ -201,7 +203,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          850 字
+          2.1k 字
         
       </span>
     
@@ -212,7 +214,7 @@
         
         
         
-          8 分钟
+          18 分钟
         
       </span>
     
@@ -249,113 +251,64 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Scrcpy使用教程</h1>
+            <h1 id="seo-header">E类放大器原理</h1>
             
             
               <div class="markdown-body">
                 
-                <p>Scrcpy下载地址：<a target="_blank" rel="noopener" href="https://github.com/Genymobile/scrcpy"
-class="uri">https://github.com/Genymobile/scrcpy</a></p>
+                <p>转载自<a target="_blank" rel="noopener" href="https://www.kechuang.org/t/78392"
+class="uri">https://www.kechuang.org/t/78392</a></p>
+<p>不少人第一次听说E类功放都是因为那个class E
+SSTC，从网上查询却发现资料少的可怜，其原理和设计方法就更无从谈及。下面我就根据书中所写以及自己的理解讲一下。讲之前还需说一下，因为电路分析必须涉及微积分，所以不懂的最好查一下，不需要会解，能明白符号含义和表达式意义就行。</p>
+<p><strong>E类功放产生的原因</strong></p>
 <p><br></p>
-<p><strong>使用ADB连接</strong></p>
-<p>有线连接或者无线连接都需要手机打开开发者模式的usb调试，无线连接还需要开启无线调试<br />
-无线连接需要通过命令 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">adb connect ip:5555<br></code></pre></td></tr></table></figure>
-连接成功后通过adb命令可以看到设备序列号UUID <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">adb devices<br></code></pre></td></tr></table></figure>
-只有一个设备的话可以直接启动scrcpy投屏 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">scrcpy<br></code></pre></td></tr></table></figure>
-有多个设备的情况下可以通过下面命令选择指定设备</p>
-<p>无线投屏 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">scrcpy -s ip:5555<br></code></pre></td></tr></table></figure> 有线连接 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">scrcpy -s UUID<br></code></pre></td></tr></table></figure></p>
-<p><strong>屏幕常亮</strong></p>
-<p>scrcpy本身支持有线模式下的屏幕常亮,不过无线连接时不能保持屏幕常亮.我们可以通过adb命令来解决这个问题
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">adb shell input keyevent 0<br></code></pre></td></tr></table></figure>
-原理也很简单,就是adb模拟按下按键0,按键0在安卓系统里代表未知按键,没有作用,不过能保持屏幕常亮,这里我使用python脚本来每10s执行一次adb指令
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    os.system(<span class="hljs-string">&quot;adb shell input keyevent 0&quot;</span>)<br>    time.sleep(<span class="hljs-number">10</span>)<br></code></pre></td></tr></table></figure></p>
+<p>D类功放是较早出现的一类开关功放，其出现促进了逆变技术的发展。由于晶体管处于开关状态，理论上可以达到100%的效率。由于晶体管势垒电容、扩散电容以及电路中分布电容的影响，晶体管由饱和到截止或由截止到饱和，都需要一定的转换时间。因而导致转换时间内管子的集电极电流和集电极电压均会有较大的数值致使管耗增加。寄生电容不太大，工作频率较低时，可忽略其影响。然而工作频率较高时，管耗的增加就无法忽略，使效率降低，甚至使器件损坏。为了弥补这一缺陷，E类功放应运而生。</p>
+<p><strong>E类功放的原理</strong></p>
 <p><br></p>
-<p><strong>Scrcpy常用快捷键</strong></p>
-<p><strong>MOD在Windows下默认为Alt</strong></p>
-<table>
-
-<thead>
-<tr class="header">
-<th>快捷键</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Ctrl+c</td>
-<td>复制</td>
-</tr>
-<tr class="even">
-<td>Ctrl+x</td>
-<td>剪切</td>
-</tr>
-<tr class="odd">
-<td>Ctrl+v</td>
-<td>粘贴 （但仅在 Android &gt;= 7 上支持）</td>
-</tr>
-<tr class="even">
-<td>MOD+f</td>
-<td>全屏</td>
-</tr>
-<tr class="odd">
-<td>MOD+ [ ← → ]</td>
-<td>向左向右旋转</td>
-</tr>
-<tr class="even">
-<td>MOD+s</td>
-<td>最近任务</td>
-</tr>
-<tr class="odd">
-<td>MOD+g</td>
-<td>将窗口大小调整为 1:1</td>
-</tr>
-<tr class="even">
-<td>MOD+w | 双击左键</td>
-<td>调整窗口大小以去除黑边</td>
-</tr>
-<tr class="odd">
-<td>MOD+h | 中键单击</td>
-<td>点击 HOME</td>
-</tr>
-<tr class="even">
-<td>MOD+b | 右键单击</td>
-<td>点击返回</td>
-</tr>
-<tr class="odd">
-<td>MOD+m</td>
-<td>点击（解锁屏幕）⁴MENU</td>
-</tr>
-<tr class="even">
-<td>MOD+↑↓</td>
-<td>音量加减</td>
-</tr>
-<tr class="odd">
-<td>MOD+p</td>
-<td>点击电源键</td>
-</tr>
-<tr class="even">
-<td>MOD+o</td>
-<td>关闭设备屏幕（保持镜像）</td>
-</tr>
-<tr class="odd">
-<td>MOD+Shift+o</td>
-<td>打开设备屏幕</td>
-</tr>
-<tr class="even">
-<td>MOD+r</td>
-<td>切换横屏竖屏</td>
-</tr>
-<tr class="odd">
-<td>MOD+n</td>
-<td>展开通知面板</td>
-</tr>
-</tbody>
-</table>
+<p>下图为E类功放的电路图</p>
+<figure>
+<img src="00.png" srcset="/sun/img/loading.gif" lazyload alt="E类功放的电路图" />
+<figcaption aria-hidden="true">E类功放的电路图</figcaption>
+</figure>
+<p>与电源相连的的电感为射频扼流圈，允许直流通过为电路提供能量，阻止射频电流从此传出，理想状态下感抗无穷大。LX的作用是提供一定的感抗，具体的原因会在之后说明。LS和CS构成谐振于信号基波频率的串联谐振电路，理想状态下品质因数Q无穷大。RL为负载电阻。开关管等效为开关和输出寄生电容的并联电路，用开关代替开关管等效电路中的开关，电容CP代替开关管输出端的寄生电容。</p>
+<p>电路图中标出了部分电压或电流。Idc是输入电流；i(t)和u(t)分别是开关和电容CP并联部分的电流和电压，也就是开关管的电流和电压，都是时间函数；isw(t)和ic(t)分别是开关和电容CP两端的电流，也都是时间函数；Irfcosωt是射频电流的时间函数，射频电流峰值即为系数Irf。</p>
+<p>设
+1.png。下图为这些电压或电流随时间变化的图像，也就是他们的波形。由上图可以看出，i(θ)是输入电流和射频电流之和。-α1到2π-α1为一个工作周期。-α1到α2开关管导通，这时u(θ)等于零，ic(θ)也等于零，isw(θ)和i(θ)相同；α2到2π-α1开关管截止，这时isw(θ)等于零，ic(θ)与i(θ)相同，u(θ)即为电容两端电流的积分。2π-α1时，u(θ)恰好降为零，然后进入下一周期，开关管导通。可以看出，寄生电容两端电压为零时开关管才导通，这就解决了之前提到的问题。开关管电压和电流乘积始终为零，因此其理论效率为100%。
+0.png</p>
+<p><strong>E类功放的设计</strong></p>
 <p><br></p>
-<p><strong>文件传输</strong></p>
-<p>直接把文件拖到scrcpy窗口文件就会通过adb传输到手机Download目录</p>
-<p><strong>键盘映射</strong></p>
-<p>在投屏上可以直接用电脑键盘输入英文,只有电脑键盘为英文模式下有用</p>
+<p>-α1到α2开关管导通，因此开关管导通角为 2.png ① 根据之前的分析可以得到
+3.png ② 设 4.png 那么 5.png
+根据之前的分析及图像，很容易得出开关管峰值电流 6.png
+-α1时开关管电流为零，代入式②可以得到 7.png 8.png ③
+一个工作周期内，开关管导通时流过的电流的平均值等于输入电流，因此可以得到
+9.png 10.png ④ 代入式①和③进一步化简可以得到 11.png
+这样就得到m和导通角Φ之间的关系，进而可以把很多量和导通角Φ联系起来。
+开关管截止时，两端电压u(θ)为电流在电容CP上的积分 12.png 13.png
+当开关管电流为零时，电压达到最大值。根据余弦函数图像的对称性可以得知α1时为零，因此开关管电压最大值为
+14.png
+再次观察u(θ)的图像，会发现它不是正弦波。用傅里叶公式对其进行正交分解，分解为余弦和正弦两个部分
+正弦部分 15.png 化简后再代入式③和④得到 16.png⑤ 余弦部分 17.png
+化简后再代入式④得到 18.png⑥
+在LX，LS，CS和RL构成的射频串联回路中，LS和CS的作用是只允许与其谐振频率相同的基波通过，其值与谐振频率及品质因数Q的关系在这里不在赘述。式⑤可以看出，开关管两端电压含有正弦成分，而射频电流为余弦函数。为了使功率因数为1，就需要一个电抗抵消掉，提供这个电抗的就是电感LX。抵消后，开关管两端电压剩下的余弦成分就会加在负载电阻上。
+一个工作周期内，开关管截止时两端的电压的平均值等于电源电压，因此可以得到
+19.png 20.png⑦
+可以发现这个式子与之前式⑥极为相似。为了进一步得到各个量之间的关系，进行下面的分析。
+输入功率为 21.png 因为电路的效率为100%，所以射频功率等于输入功率。
+22.png 通过比较式⑥和⑦，以及射频电流的峰值电流和有效电流的关系，可以得到
+23.png
+射频功率只由负载电阻消耗，因此最右边可以看为负载电阻两端有效电压与有效电流的乘积，进而可以求出负载电阻
+24.png 根据之前的分析，负载电阻还可以用另一种更为简单的方式求得 25.png
+通过前面对射频串联回路的分析，可以得到感抗 26.png 进而得出电感值 27.png
+至此，所有需要计算的元件值都已得出。</p>
+<p><br></p>
+<p><br></p>
+<p>下面检验一下 因为公式复杂，因此用VB写了一个计算器（在附件中） 28.png
+输入已知量计算 29.png 用multisim把电路搭出来仿真 30.png
+波形理想，峰值电流和峰值电压与计算相符。经计算，电阻功耗和设计相符。</p>
+<p><br></p>
+<p>当然，E类也有一些缺点比如 难调试
+峰值电压（导通角为180°时为电源电压3.56倍）与峰值电流（导通角为180°时为输入电流2.68倍）大，对器件要求高。</p>
 
                 
               </div>
@@ -373,8 +326,8 @@ class="uri">https://github.com/Genymobile/scrcpy</a></p>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Scrcpy使用教程</div>
-      <div>https://retuze.github.io/sun/2023/09/20/Scrcpy使用教程/</div>
+      <div>E类放大器原理</div>
+      <div>https://retuze.github.io/sun/e74e188e.html</div>
     </div>
     <div class="license-meta">
       
@@ -418,9 +371,9 @@ class="uri">https://github.com/Genymobile/scrcpy</a></p>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/sun/2023/09/21/makedown%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95/" title="makedown常用语法">
+                      <a href="/sun/6d450a2e.html" title="Scrcpy使用教程">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">makedown常用语法</span>
+                        <span class="hidden-mobile">Scrcpy使用教程</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -428,8 +381,8 @@ class="uri">https://github.com/Genymobile/scrcpy</a></p>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/sun/2023/09/20/E%E7%B1%BB%E6%94%BE%E5%A4%A7%E5%99%A8%E5%8E%9F%E7%90%86/" title="E类放大器原理">
-                        <span class="hidden-mobile">E类放大器原理</span>
+                      <a href="/sun/841ad647.html" title="考研英语笔记">
+                        <span class="hidden-mobile">考研英语笔记</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -452,7 +405,7 @@ class="uri">https://github.com/Genymobile/scrcpy</a></p>
         var options = Object.assign(
           {"clientID":"a3a7e61e8b19b207c6be","clientSecret":"0e43b8712060e0b185bdd18e8520425d5c1f9f23","repo":"sun","owner":"retuze","admin":["retuze"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
           {
-            id: '09f4d63f36e5f7ab384d25cc2461d89c'
+            id: 'd39c26cf7ac823c9f6e2dbfcdd52ec6f'
           }
         )
         var gitalk = new Gitalk(options);
