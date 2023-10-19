@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>git从零开始配置</title>
+    <link href="/sun/70dfd77e.html"/>
+    <url>/sun/70dfd77e.html</url>
+    
+    <content type="html"><![CDATA[<p>Git是一种分布式版本控制系统，可以轻松地跟踪代码的变化，并允许您与他人协作。本教程将指导您完成Git 的下载和安装过程，并说明如何配置 SSH 连接。</p><h2 id="quick-start">Quick Start</h2><h3 id="下载-git">下载 Git</h3><p>首先，您需要从 Git 的<ahref="https://git-scm.com/downloads">官方网站</a>下载Git。根据您的操作系统，选择相应的下载链接。 对于 Windows 用户，选择<code>msys-git.zip</code> 或<code>Git-bash.exe</code>，根据您的偏好进行选择。 对于 macOS 用户，选择<code>git-macos.pkg</code>。 对于 Linux用户，您需要从您的发行版的软件源安装 Git。</p><h3 id="安装-git">安装 Git</h3><p>下载完成后，您可以开始安装 Git。</p><p>对于 Windows 用户： * 解压缩 <code>msys-git.zip</code> 或<code>Git-bash.exe</code> 到您的目标文件夹。 * 打开<code>Git Bash</code> 或 <code>Git Shell</code>（如果您使用了 GitBash），您现在已进入 Git 的命令行界面。</p><p>对于 macOS 用户： * 运行 <code>git-macos.pkg</code>并按照提示完成安装过程。 * 在安装完成后，您可以在<code>/usr/local/bin/git</code> 中找到 Git可执行文件。您可以在终端中运行 <code>git</code> 来检查安装是否成功。</p><p>对于 Linux 用户： * 打开终端并使用您的包管理器安装 Git。例如，对于Ubuntu，您可以运行以下命令： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt update<br>sudo apt install git<br></code></pre></td></tr></table></figure> ### 配置 SSH 连接</p><p>在开始使用 Git 之前，您需要配置 SSH 连接，以便与其他人通过 SSH进行通信。 * 首先，确保您已经安装了 SSH。对于大多数操作系统，SSH可通过默认安装的 Git 安装程序自动安装。 * 现在，您需要生成一对 SSH密钥对。在终端中导航到您的用户主目录，然后运行以下命令： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> ~/.ssh<br>ssh-keygen -t rsa -C <span class="hljs-string">&quot;your_email@example.com&quot;</span><br></code></pre></td></tr></table></figure> *这将生成一对公钥和私钥文件，名为 <code>id_rsa</code> 和<code>id_rsa.pub</code>。公钥可以公开分享，而私钥应该保密。 *在您的本地计算机上，打开 <code>~/.ssh/id_rsa.pub</code>文件并复制其内容： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cat</span> ~/.ssh/id_rsa.pub<br></code></pre></td></tr></table></figure> * 然后，将公钥 <code>id_rsa.pub</code>的内容添加到您的 Git 账户的 SSH 公钥中。这通常是您 Git账户设置页面上的“SSH 公钥”部分。具体的步骤可能因 Git服务提供商而异，您需要参考相应服务提供商的文档。 *现在，您可以使用以下命令测试 SSH 连接： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh -T git@github.com<br></code></pre></td></tr></table></figure>如果一切正常，您应该能够直接 SSH 到您的 Git服务提供商而无需输入密码。看到You've successfullyauthenticated则说明连接成功。</p><h3 id="设置全局-git-用户名和密码">设置全局 Git 用户名和密码</h3><p>全局的 Git 用户名和密码将会和你系统上所有没有指定项目及标识的项目上的commits 相关联。想要设置全局 commit 名字和邮件地址，运行gitconfig命令，加上--global选项：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --global user.name <span class="hljs-string">&quot;Your Name&quot;</span><br>git config --global user.email <span class="hljs-string">&quot;youremail@yourdomain.com&quot;</span><br></code></pre></td></tr></table></figure><p>这个命令将这些值保存在全局配置文件,~/.gitconfig,一旦完成，你将可以通过运行下面的命令，确认这些信息：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --list<br></code></pre></td></tr></table></figure><p>你可以使用文本编辑器直接编辑文件，但是我们推荐你使用gitconfig来进行设置。</p><h2 id="end">END</h2><p>现在您已经完成了 Git 的下载、安装和 SSH 配置过程，可以开始使用 Git来管理和协作代码了！</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>最便宜的机场：一元机场</title>
     <link href="/sun/89e723bf.html"/>
     <url>/sun/89e723bf.html</url>
