@@ -23,13 +23,13 @@
 <meta property="og:site_name" content="RETUZE">
 <meta property="og:description" content="milk-v duo点灯教程（shell命令,shell脚本,C语言） 点灯前的准备(参考此处)  一个烧录好最新镜像的milk-v duo板子 启用ssh连接到milk-v duo 停止开机闪烁led的进程  最新的镜像开机会启动一个闪烁led的进程，我们需要把它停掉才能进行下面的实验。使用top命令查看进程 1top  可以看到PID进程号为164的进程，这个就是闪烁le">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://retuze.github.io/sun/top.jpg">
-<meta property="og:image" content="https://retuze.github.io/sun/top2.jpg">
+<meta property="og:image" content="https://retuze.github.io/sun/bbe2553b/top.jpg">
+<meta property="og:image" content="https://retuze.github.io/sun/bbe2553b/top2.jpg">
 <meta property="article:published_time" content="2023-08-15T09:23:18.000Z">
-<meta property="article:modified_time" content="2023-10-19T10:40:06.467Z">
+<meta property="article:modified_time" content="2023-10-19T15:22:30.102Z">
 <meta property="article:author" content="Retuze">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://retuze.github.io/sun/top.jpg">
+<meta name="twitter:image" content="https://retuze.github.io/sun/bbe2553b/top.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -269,12 +269,12 @@ duo板子</p></li>
 <li><p>停止开机闪烁led的进程</p></li>
 </ol>
 <p>最新的镜像开机会启动一个闪烁led的进程，我们需要把它停掉才能进行下面的实验。使用top命令查看进程
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">top<br></code></pre></td></tr></table></figure> <img src="top.jpg" srcset="/sun/img/loading.gif" lazyload alt="top命令" /></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">top<br></code></pre></td></tr></table></figure> <img src="bbe2553b/top.jpg" srcset="/sun/img/loading.gif" lazyload alt="top命令" /></p>
 <p>可以看到PID进程号为164的进程，这个就是闪烁led的进程，我们使用kill指令结束它
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">kill</span> -9 164<br></code></pre></td></tr></table></figure>
 然后在用top指令发现这个进程已经被结束了，同时led灯也停止了闪烁</p>
 <figure>
-<img src="top2.jpg" srcset="/sun/img/loading.gif" lazyload alt="top命令" />
+<img src="bbe2553b/top2.jpg" srcset="/sun/img/loading.gif" lazyload alt="top命令" />
 <figcaption aria-hidden="true">top命令</figcaption>
 </figure>
 <h3 id="shell命令点灯">shell命令点灯</h3>
